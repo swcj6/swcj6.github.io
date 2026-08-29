@@ -306,12 +306,6 @@ The resulting crack propagated across the membrane and eventually separated the 
   Your browser does not support the video tag.
 </video>
 
-### Explicit Solver
-
-The explicit solver successfully reproduced the straight tearing behavior.
-
-Damage concentrated along the crack boundaries while most of the remaining membrane remained intact.
-
 ---
 
 ## Fracture Case 2 — Pinch Tear
