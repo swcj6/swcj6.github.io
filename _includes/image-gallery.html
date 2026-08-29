@@ -1,0 +1,29 @@
+{% assign image_paths = include.images | split: ", " %}
+{% assign gallery_height = include.height | default: "300" %}
+
+<div class="image-gallery" style="--gallery-height: {{ gallery_height }}px;">
+  {% for image_path in image_paths %}
+      {% assign image_name = image_path | strip %}
+      {% if image_name contains 'https://' %}
+          <img 
+              src="{{ image_name }}"
+              alt="Web image"
+              loading="lazy"
+          />
+      {% else %}
+          {%- comment -%}
+            Derived from page.path rather than page.url: the old
+            `page.url | remove: 'index'` left a double slash, and would have
+            mangled any folder whose name contained "index".
+          {%- endcomment -%}
+          {% assign project_dir = page.path | split: "/" | slice: 1, 1 | join: "" %}
+          {% assign gallery_src = "/projects/" | append: project_dir | append: "/" | append: image_name %}
+          <img 
+              src="{{ gallery_src | relative_url }}" 
+              alt="{{image_name}}"
+              loading="lazy"
+              onerror="this.onerror=null;this.src=this.src.replace('.webp','.png').replace('.png','.webp');"
+          />
+      {% endif %}
+  {% endfor %}
+</div>

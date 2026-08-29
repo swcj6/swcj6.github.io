@@ -1,0 +1,31 @@
+<!-- SECTION 2: Projects -->
+<section id="projects" class="project-grid-section">
+    <div class="section-heading">
+        <h2>Projects</h2>
+    </div>
+
+    <div class="grid-container">
+        {% for item in site.projects %}
+            <a href="{{ item.url }}" class="project-link">
+                <div class="project-card">
+                    {% assign project_dir = item.path | split: "/" | slice: 1, 1 | join: "" %}
+                    {% assign main_image = item['main-image'] | remove_first: "/" %}
+                    {% assign image_path = "/projects/" | append: project_dir | append: "/" | append: main_image %}
+                    <img src="{{ image_path | relative_url }}" alt="{{ item.title }}" loading="lazy">
+
+                    <h3 class="project-title">{{ item.title }}</h3>
+
+                    <div class="project-skills">
+                        {% for skill in item.skills %}
+                            <span class="skill">{{ skill }}</span>
+                        {% endfor %}
+                    </div>
+
+                    <p class="project-description">{{ item.description }}</p>
+
+                    <button class="read-more" tabindex="-1">Read more &rarr;</button>
+                </div>
+            </a>
+        {% endfor %}
+    </div>
+</section>

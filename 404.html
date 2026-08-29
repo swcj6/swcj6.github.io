@@ -1,0 +1,41 @@
+---
+permalink: /404.html
+layout: wrapper
+---
+
+<style type="text/css" media="screen">
+  .not-found {
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+  }
+
+  .not-found .code {
+    font-family: var(--font-mono);
+    font-size: clamp(3rem, 10vw, 5rem);
+    font-weight: 500;
+    color: var(--border-color);
+    line-height: 1;
+  }
+
+  .not-found p {
+    color: var(--muted-color);
+    margin: 0;
+  }
+
+  .not-found a {
+    margin-top: 16px;
+    font-size: var(--step-small);
+  }
+</style>
+
+<div class="not-found">
+  <span class="code">404</span>
+  <h1>Page not found</h1>
+  <p>The requested page could not be found.</p>
+  <a href="{{ '/' | relative_url }}">&larr; Back to home</a>
+</div>

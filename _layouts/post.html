@@ -1,0 +1,49 @@
+---
+layout: wrapper
+---
+
+<div class="post-view">
+    <div class="summary">
+        <div class="title-header">
+            <h1>{{ page.title }}</h1>
+        </div>
+
+        {% if page.skills %}
+            <ul class="skills-list">
+                {% for skill in page.skills %}
+                    <li class="skill">{{ skill }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        {% if page.github %}
+            <div class="project-github">
+              <a href="{{ page.github }}"
+                 target="_blank"
+                 rel="noopener noreferrer"
+                 class="github-btn">
+                GitHub Repository
+              </a>
+            </div>
+        {% endif %}
+
+        {%- comment -%}
+          Built from page.path (not page.url) so it is independent of the
+          permalink, and remove_first tolerates a main-image written with or
+          without a leading slash.
+        {%- endcomment -%}
+        {% assign project_dir = page.path | split: "/" | slice: 1, 1 | join: "" %}
+        {% assign main_image = page['main-image'] | remove_first: "/" %}
+        {% assign image_path = "/projects/" | append: project_dir | append: "/" | append: main_image %}
+        <img src="{{ image_path | relative_url }}" alt="{{ page.title }}">
+
+        <div class="project-description">
+            <h2>Project Overview</h2>
+            <p>{{ page.description }}</p>
+        </div>
+    </div>
+
+    <div class="content">
+        {{ content }}
+    </div>
+</div>

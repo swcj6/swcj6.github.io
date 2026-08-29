@@ -1,0 +1,107 @@
+# ==========================================
+# Steven Wu Portfolio Configuration
+# ==========================================
+
+# Main Page Setup
+title: Steven Wu | Portfolio
+
+# Site URL, used to build absolute links for Open Graph / the RSS feed.
+# baseurl is "" for a <user>.github.io repo; for a project repo it would
+# be "/<repo-name>".
+url: "https://swcj6.github.io"
+baseurl: ""
+
+
+# ==========================================
+# Hero Section
+# ==========================================
+
+name: Cheng-Ju (Steven) Wu
+
+headline: Mechanical Engineer
+
+description: >-
+  Mechanical engineering student interested in robotics, machine learning,
+  computational design, and advanced manufacturing. My work focuses on combining
+  mechanical design, simulation, optimization, and intelligent systems to develop
+  practical engineering solutions.
+
+  <br><br>
+  
+  During my undergraduate studies in Mechanical Engineering
+  at Santa Clara University, I conducted research in the GIFTED Lab, 
+  where I explored machine learning–driven approaches to topology optimization 
+  with a focus on incorporating additive manufacturing constraints. My research 
+  aimed to develop optimized mechanical designs that are not only structurally efficient 
+  but also manufacturable using additive manufacturing processes.
+  
+  
+
+# Profile Image
+# Put your image inside:
+# assets/images/profile-image/
+profile_image: ./assets/images/profile-image/profile.jpg
+
+
+# ==========================================
+# Resume
+# ==========================================
+
+resume-url: /assets/Resume/Resume.pdf
+
+
+# ==========================================
+# External Links
+# ==========================================
+
+external-links:
+  linkedin: steven-cj-wu
+
+
+# ==========================================
+# Colors
+# ==========================================
+# Edit these to recolor the whole site. Every value below is exposed
+# to the stylesheet as a CSS custom property, so nothing is hardcoded
+# in css/styles.css.
+
+colors:
+  text: "#17191c"             # primary body + headings (warm graphite)
+  muted: "#5b6169"            # secondary text, captions, eyebrows
+  border: "#e3e5e9"           # hairline rules and card outlines
+  link: "#1d4ed8"             # the single accent: links, buttons, tags
+  highlight: "#1e40af"        # accent, one step darker (hover/active)
+  background: "#ffffff"
+  light_background: "#f4f5f7" # tinted panels behind images and tags
+
+
+# ==========================================
+# Jekyll Build Settings
+# DO NOT MODIFY UNLESS NECESSARY
+# ==========================================
+
+collections:
+  projects:
+    output: true
+    permalink: /projects/:path/
+
+
+markdown: kramdown
+
+highlighter: rouge
+
+kramdown:
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    css_class: "highlight"
+    span:
+      line_numbers: false
+    block:
+      line_numbers: false
+      start_line: 1
+      indent: 0
+
+
+plugins:
+  - jekyll-feed
+

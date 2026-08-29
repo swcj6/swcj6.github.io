@@ -1,0 +1,836 @@
+---
+---
+
+/* ==========================================================================
+   Design tokens
+   Colors come from _config.yml -> colors:  (edit them there, not here)
+   ========================================================================== */
+
+:root {
+  --text-color:             {{ site.colors.text }};
+  --muted-color:            {{ site.colors.muted }};
+  --border-color:           {{ site.colors.border }};
+  --link-color:             {{ site.colors.link }};
+  --highlight-color:        {{ site.colors.highlight }};
+  --background-color:       {{ site.colors.background }};
+  --light-background-color: {{ site.colors.light_background }};
+
+  /* Type families */
+  --font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Modular scale, ratio 1.25. Clamped so phones stay readable
+     and 4K displays don't balloon the page. */
+  --step-hero:  clamp(2.5rem, 1.6rem + 2.8vw, 3.75rem);   /* 40 -> 60px */
+  --step-h2:    clamp(1.75rem, 1.35rem + 1.2vw, 2.25rem); /* 28 -> 36px */
+  --step-h3:    1.375rem;                                  /* 22px */
+  --step-body:  1.0625rem;                                 /* 17px */
+  --step-small: 0.875rem;                                  /* 14px */
+
+  --measure: 68ch;
+  --nav-height: 64px;
+
+  /* Spacing rhythm */
+  --space-section: clamp(4rem, 8vw, 7rem);
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  color-scheme: light;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  padding: 0 50px;
+  font-family: var(--font-sans);
+  font-size: var(--step-body);
+  line-height: 1.65;
+  color: var(--text-color);
+  background-color: var(--background-color);
+  max-width: 1400px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  color: var(--text-color);
+  line-height: 1.15;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+}
+
+h1 { font-size: var(--step-hero); font-weight: 600; }
+h2 { font-size: var(--step-h2);   font-weight: 600; }
+h3 { font-size: var(--step-h3);   font-weight: 500; }
+
+p {
+  color: var(--text-color);
+  margin-bottom: 1em;
+}
+
+a {
+  color: var(--link-color);
+  text-decoration: none;
+}
+
+img { max-width: 100%; }
+
+/* Keyboard users must be able to see where they are. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--link-color);
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+
+/* Mono eyebrow label, used for the discipline line and section headings. */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: var(--step-small);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-color);
+}
+
+/* ==========================================================================
+   Navbar  -- 64px, sticky, hairline rule
+   ========================================================================== */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: var(--nav-height);
+  margin: 0 -50px;
+  padding: 0 50px;
+  background-color: color-mix(in srgb, var(--background-color) 85%, transparent);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--border-color);
+}
+
+nav .left a {
+  color: var(--text-color);
+  font-size: 1.125rem;      /* 18px */
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+nav .right {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+nav .right a {
+  color: var(--text-color);
+  font-size: 0.9375rem;     /* 15px */
+  font-weight: 400;
+  transition: color 0.15s ease;
+}
+
+nav .right a:hover {
+  color: var(--link-color);
+}
+
+/* Resume is the highest-value link on a student portfolio: give it a button. */
+nav .right a.resume-link {
+  border: 1px solid var(--link-color);
+  color: var(--link-color);
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+nav .right a.resume-link:hover {
+  background-color: var(--link-color);
+  color: var(--background-color);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+
+.hero-section {
+  position: relative;
+  margin: clamp(3rem, 7vw, 5.5rem) 0 var(--space-section);
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* Corner ticks: datum marks from a technical drawing. Drawn as four
+   small L-brackets so they hold their size at every viewport width,
+   unlike the border-image gradient they replace. */
+.hero-section::before,
+.hero-section::after {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border: 1px solid var(--border-color);
+  pointer-events: none;
+}
+
+.hero-section::before {
+  top: 0;
+  left: 0;
+  border-right: none;
+  border-bottom: none;
+}
+
+.hero-section::after {
+  bottom: 0;
+  right: 0;
+  border-left: none;
+  border-top: none;
+}
+
+.hero-section .group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+}
+
+.hero-section .text {
+  flex: 5;
+  min-width: 0;
+}
+
+.hero-section .text h1 {
+  margin-bottom: 14px;
+}
+
+.hero-section .text .discipline {
+  display: block;
+  margin-bottom: 22px;
+}
+
+.hero-section .text p {
+  max-width: var(--measure);
+  color: var(--muted-color);
+  margin-bottom: 0;
+}
+
+/* Action row: resume button + social icons, no longer nested in the heading. */
+.hero-section .actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.hero-section .actions .button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  background-color: var(--link-color);
+  color: var(--background-color);
+  font-size: var(--step-small);
+  font-weight: 500;
+  transition: background-color 0.15s ease;
+}
+
+.hero-section .actions .button:hover {
+  background-color: var(--highlight-color);
+}
+
+.hero-section .external-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.hero-section .external-links a {
+  display: inline-flex;
+  color: var(--muted-color);
+  transition: color 0.15s ease;
+}
+
+.hero-section .external-links a:hover {
+  color: var(--text-color);
+}
+
+.hero-section .external-links svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.hero-section .headshot {
+  flex: 3;
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* 4:5 portrait, biased upward so the face fills the frame
+   rather than the background behind it. */
+.hero-section .headshot img {
+  width: 100%;
+  max-width: 340px;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 22%;
+  border-radius: 10px;
+  display: block;
+}
+
+/* ==========================================================================
+   Section heading  --  tracked mono label over a hairline rule
+   ========================================================================== */
+
+.section-heading {
+  border-top: 1px solid var(--border-color);
+  padding-top: 18px;
+  margin-bottom: 32px;
+}
+
+.section-heading h2 {
+  font-family: var(--font-mono);
+  font-size: var(--step-small);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-color);
+}
+
+/* ==========================================================================
+   Projects grid
+   ========================================================================== */
+
+.project-grid-section {
+  margin-bottom: var(--space-section);
+  /* Sticky navbar would otherwise cover the /#projects anchor target. */
+  scroll-margin-top: calc(var(--nav-height) + 24px);
+}
+
+.project-grid-section .grid-container {
+  display: grid;
+  /* Capped at 2 columns: future projects wrap 2-up instead of
+     shrinking into three narrow cards. */
+  grid-template-columns: repeat(auto-fit, minmax(min(380px, 100%), 1fr));
+  gap: 28px;
+  align-items: stretch;
+}
+
+@media (min-width: 900px) {
+  .project-grid-section .grid-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.project-grid-section .project-link {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  height: 100%;
+}
+
+.project-grid-section .grid-container .project-link .project-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 16px;
+  background: var(--background-color);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.project-link:hover .project-card,
+.project-link:focus-visible .project-card {
+  transform: translateY(-3px);
+  border-color: var(--muted-color);
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* 4:3 frame with the whole image contained on a tinted panel.
+   Engineering imagery arrives in every aspect ratio and often on
+   white; contain guarantees nothing important is ever cropped off. */
+.project-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: contain;
+  background-color: var(--light-background-color);
+  padding: 14px;
+  border-radius: 8px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.project-card .project-title {
+  font-size: var(--step-h3);
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 12px;
+}
+
+.project-link:hover .project-title {
+  color: var(--link-color);
+}
+
+.project-card .project-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.project-card .project-skills .skill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background-color: var(--light-background-color);
+  color: var(--muted-color);
+  white-space: nowrap;
+}
+
+.project-card .project-description {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  color: var(--muted-color);
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  margin-bottom: 0;
+}
+
+/* Pushed to the bottom so cards of unequal text length still line up. */
+.project-card .read-more {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--step-small);
+  font-weight: 500;
+  color: var(--link-color);
+  cursor: pointer;
+  text-align: start;
+  margin-top: auto;
+  padding-top: 16px;
+}
+
+.project-link:hover .read-more {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+footer {
+  border-top: 1px solid var(--border-color);
+  padding: 28px 0;
+  text-align: center;
+}
+
+footer .footer-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+footer .links {
+  display: flex;
+  gap: 24px;
+}
+
+footer .links a {
+  color: var(--muted-color);
+  font-size: var(--step-small);
+  transition: color 0.15s ease;
+}
+
+footer .links a:hover {
+  color: var(--text-color);
+}
+
+footer p {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--muted-color);
+}
+
+/* ==========================================================================
+   Project post page
+   ========================================================================== */
+
+.post-view {
+  margin: clamp(2rem, 5vw, 3.5rem) auto var(--space-section);
+}
+
+.post-view .summary {
+  margin-bottom: 40px;
+}
+
+.post-view .title-header h1 {
+  font-size: var(--step-h2);
+  margin-bottom: 18px;
+}
+
+/* Title reads before the image, so the page announces what it is
+   before it shows you a photograph. */
+.post-view .summary img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: contain;
+  background-color: var(--light-background-color);
+  padding: 20px;
+  border-radius: 10px;
+  display: block;
+  margin-bottom: 24px;
+}
+
+.post-view .summary .skills-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 24px;
+}
+
+.post-view .summary .skill {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  background-color: var(--light-background-color);
+  color: var(--muted-color);
+  border-radius: 4px;
+  padding: 4px 9px;
+}
+
+.post-view .summary .project-description h2 {
+  font-family: var(--font-mono);
+  font-size: var(--step-small);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-color);
+  margin-bottom: 10px;
+}
+
+.post-view .summary .project-description p {
+  color: var(--muted-color);
+}
+
+/* The hero image stays full-bleed; everything else — title, tags, description,
+   body copy, videos — shares one centred column so the page has a single
+   centre axis instead of a wide image over a left-hugging text block.
+   Long-hand margins here so each rule keeps its own vertical spacing. */
+.post-view .title-header,
+.post-view .summary .skills-list,
+.post-view .project-github,
+.post-view .summary .project-description,
+.post-view .content {
+  max-width: var(--measure);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.post-view .content h2 {
+  font-size: var(--step-h3);
+  margin: 2em 0 0.6em;
+}
+
+.post-view .content h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin: 1.6em 0 0.5em;
+}
+
+.post-view .content p {
+  margin-bottom: 1.2em;
+}
+
+.post-view .content a {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+.post-view .content a:hover {
+  color: var(--highlight-color);
+}
+
+/* Scoped: the previous rule leaked `ol` to every page on the site. */
+.post-view .content ul,
+.post-view .content ol {
+  padding-left: 22px;
+  margin: 1em 0;
+}
+
+.post-view .content li {
+  margin-bottom: 0.4em;
+}
+
+.post-view .content blockquote {
+  border-left: 3px solid var(--link-color);
+  margin: 1.5em 0;
+  padding: 12px 20px;
+  background-color: var(--light-background-color);
+  border-radius: 0 6px 6px 0;
+  color: var(--muted-color);
+}
+
+.post-view .content hr {
+  border: 0;
+  height: 1px;
+  background: var(--border-color);
+  margin: 2.5em 0;
+}
+
+.post-view .content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5em 0;
+  font-size: var(--step-small);
+}
+
+.post-view .content th,
+.post-view .content td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.post-view .content th {
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-color);
+  background-color: var(--light-background-color);
+}
+
+.post-view .content td {
+  color: var(--text-color);
+}
+
+.post-view .content code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background-color: var(--light-background-color);
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+.post-view .content pre {
+  background-color: var(--light-background-color);
+  padding: 16px;
+  border-radius: 8px;
+  overflow-x: auto;
+  margin: 1.5em 0;
+}
+
+.post-view .content pre code {
+  background: none;
+  padding: 0;
+}
+
+/* MathJax: keep wide display equations from breaking the mobile layout */
+.post-view .content mjx-container[display="true"] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 4px 0;
+  margin: 1.5em 0;
+}
+
+
+/* Wide content must scroll inside itself, never the page body. */
+.post-view .content .image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 1.5em 0;
+}
+
+.post-view .content .image-gallery img {
+  max-height: var(--gallery-height);
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.youtube-container {
+  width: 100%;
+  max-width: var(--max-width);
+  margin: 1.5em 0;
+}
+
+.youtube-aspect-ratio {
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.25%;   /* 16:9 */
+}
+
+.youtube-aspect-ratio iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  border-radius: 8px;
+}
+
+.project-github {
+  margin: 20px 0 30px 0;
+}
+
+.github-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  background: #24292f;
+  color: white !important;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.github-btn:hover {
+  background: #444c56;
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+/* Hero stays side-by-side down to 900px, so a 1280px laptop
+   does not get the stacked mobile layout. */
+@media (max-width: 900px) {
+  .hero-section .group {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .hero-section .headshot {
+    justify-content: flex-start;
+  }
+
+  .hero-section .headshot img {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  body {
+    padding: 0 24px;
+  }
+
+  nav {
+    margin: 0 -24px;
+    padding: 0 24px;
+  }
+
+  /* Only three short links, so they stay inline instead of collapsing
+     into a menu - just tighten the spacing to make room. */
+  nav .right {
+    gap: 18px;
+  }
+
+  nav .right a {
+    font-size: 0.875rem;
+  }
+
+  nav .right a.resume-link {
+    padding: 5px 12px;
+  }
+
+  .hero-section {
+    padding: clamp(1.25rem, 4vw, 2rem) 0;
+  }
+
+  .hero-section::before,
+  .hero-section::after {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    padding: 0 18px;
+  }
+
+  nav {
+    margin: 0 -18px;
+    padding: 0 18px;
+  }
+
+  nav .left a {
+    font-size: 1rem;
+  }
+
+  nav .right {
+    gap: 13px;
+  }
+
+  nav .right a {
+    font-size: 0.8125rem;
+  }
+
+  nav .right a.resume-link {
+    padding: 4px 10px;
+  }
+
+  .hero-section .headshot img {
+    max-width: 220px;
+  }
+}
+
+/* Small phones: the full name plus three links is a tight fit, so step
+   everything down once more to keep the bar on a single line. */
+@media (max-width: 430px) {
+  nav .left a {
+    font-size: 0.875rem;
+  }
+
+  nav .right {
+    gap: 10px;
+  }
+
+  nav .right a {
+    font-size: 0.75rem;
+  }
+
+  nav .right a.resume-link {
+    padding: 3px 8px;
+  }
+}
