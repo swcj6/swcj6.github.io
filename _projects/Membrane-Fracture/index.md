@@ -520,4 +520,4 @@ The underlying research shows how peridynamic formulations replace the different
 
 ## References
 
-1. Zohdi, T. I., *Rapid Voxel-Based Digital-Computation for Complex Microstructured Media*, Archives of Computational Methods in Engineering, 2019. https://doi.org/10.1007/s11831-018-9284-1.
+1. Taylor, M. and Steigmann, D. J., *A Two-Dimensional Peridynamic Model for Thin Plates*, Mathematics and Mechanics of Solids, Vol. 20, No. 8, pp. 998–1010, 2015. https://doi.org/10.1177/1081286513512925.
