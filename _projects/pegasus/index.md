@@ -14,7 +14,7 @@ main-image: /Pegasus.jpg
 permalink: /projects/pegasus/
 ---
 
-<a href="/assets/files/Senior_Design_Thesis_2026_signed.pdf" target="_blank" class="btn btn-primary">
+<a href="/assets/files/Senior_Design_Thesis_2026_final.pdf" target="_blank" class="btn btn-primary">
   Report
 </a>
 
