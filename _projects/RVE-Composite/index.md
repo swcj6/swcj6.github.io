@@ -15,7 +15,6 @@ skills:
 main-image: /RVE-main.png
 permalink: /projects/RVE-Composite/
 
-github: https://github.com/swcj6/Calculating_Effective_Properties_via_RVEs
 
 ---
 
