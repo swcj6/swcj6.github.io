@@ -12,7 +12,9 @@ skills:
 main-image: /particle-swarm-main.png
 permalink: /projects/Particle-Swarm/
 
+<!--
 github: https://github.com/swcj6/Particle_Swarm_Region_Mapping
+-->
 
 ---
 
