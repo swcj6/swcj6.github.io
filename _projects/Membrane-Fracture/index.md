@@ -15,7 +15,6 @@ skills:
 main-image: /fracture-main.png
 permalink: /projects/Membrane-Fracture/
 
-github: https://github.com/swcj6/Peridynamics
 
 ---
 
