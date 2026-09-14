@@ -14,6 +14,10 @@ main-image: /Pegasus.jpg
 permalink: /projects/pegasus/
 ---
 
+<a href="/assets/files/Senior_Design_Thesis_2026_signed.pdf" target="_blank" class="btn btn-primary">
+  Report
+</a>
+
 ## Overview
 
 Pegasus is an autonomous electric vertical takeoff and landing aircraft developed for the Vertical Flight Society Design-Build-Vertical Flight competition. The platform was designed around early-stage wildfire response, including aerial reconnaissance, autonomous mission execution, payload retrieval, and lightweight supply delivery.
